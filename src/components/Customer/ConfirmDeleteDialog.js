@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import { deleteCustomer } from "../services/customer.service";
+import { deleteCustomer } from "../../services/customer.service";
 
 const ConfirmDeleteDialog = ({
   open,

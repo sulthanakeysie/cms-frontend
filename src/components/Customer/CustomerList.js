@@ -11,11 +11,14 @@ import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined
 
 import CustomerFormDialog from "./CustomerFormDialog";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
-import { getAllCustomers } from "../services/customer.service";
+import { getAllCustomers } from "../../services/customer.service";
+import LoginDialog from "../Login/LoginDialog";
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
   const [openForm, setOpenForm] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(null);
 
@@ -29,7 +32,12 @@ const CustomerList = () => {
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [isLoggedIn]);
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setLoginOpen(false);
+  };
 
   const handleOpenForm = () => {
     setOpenForm(true);
@@ -76,7 +84,8 @@ const CustomerList = () => {
   };
 
   return (
-    <Box padding={"2rem 3rem"}>
+    <Box padding={"2rem 3rem"} className={loginOpen ? "blur-content" : ""}>
+       <LoginDialog open={loginOpen} onLoginSuccess={handleLoginSuccess} />
       <CustomerFormDialog
         open={openForm}
         onClose={handleCloseForm}

@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import React, { useState, useEffect } from "react";
 
-import { addCustomer, editCustomer } from "../services/customer.service";
+import { addCustomer, editCustomer } from "../../services/customer.service";
 
 const CustomerFormDialog = ({
   open,
