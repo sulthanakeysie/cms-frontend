@@ -1,10 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import "./App.css";
+import CustomerList from "./components/CustomerList";
 
 function App() {
   return (
-    <div className="App">
-    </div>
+    <Router>
+      <div>
+        <h1>Customer Management System</h1>
+        <Routes>
+          <Route path="/" element={<CustomerList />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
