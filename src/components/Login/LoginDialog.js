@@ -11,6 +11,7 @@ import {
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { login } from "../../services/user.service";
+import { toast } from "react-toastify";
 
 const LoginDialog = ({ open, onClose, onLoginSuccess }) => {
   const initialValues = { username: "", password: "" };
@@ -22,11 +23,16 @@ const LoginDialog = ({ open, onClose, onLoginSuccess }) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setSubmitting(true);
-    login(values).then((res) => {
-      localStorage.setItem("access_token", res.data.token);
-      onLoginSuccess();
- 
-    });
+    login(values)
+      .then((res) => {
+        localStorage.setItem("access_token", res?.data?.data?.token);
+        onLoginSuccess();
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message || "Some error occured.Please try again"
+        );
+      });
     setSubmitting(false);
   };
 

@@ -1,5 +1,5 @@
 import {
-    Box,
+  Box,
   Button,
   Card,
   CardContent,
@@ -13,6 +13,7 @@ import CustomerFormDialog from "./CustomerFormDialog";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { getAllCustomers } from "../../services/customer.service";
 import LoginDialog from "../Login/LoginDialog";
+import { toast } from "react-toastify";
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
@@ -26,11 +27,15 @@ const CustomerList = () => {
     try {
       getAllCustomers()
         .then((res) => {
-          setCustomers(res.data);
+          setCustomers(res.data?.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) =>
+          toast.error(
+            err?.response?.data?.message || "Something went wrong. Try again"
+          )
+        );
     } catch (error) {
-      console.error(error);
+      toast.error("Something went wrong. Try again");
     }
   }, [isLoggedIn]);
 
@@ -85,7 +90,7 @@ const CustomerList = () => {
 
   return (
     <Box padding={"2rem 3rem"} className={loginOpen ? "blur-content" : ""}>
-       <LoginDialog open={loginOpen} onLoginSuccess={handleLoginSuccess} />
+      <LoginDialog open={loginOpen} onLoginSuccess={handleLoginSuccess} />
       <CustomerFormDialog
         open={openForm}
         onClose={handleCloseForm}

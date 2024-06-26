@@ -9,6 +9,7 @@ import {
 import React from "react";
 
 import { deleteCustomer } from "../../services/customer.service";
+import { toast } from "react-toastify";
 
 const ConfirmDeleteDialog = ({
   open,
@@ -19,7 +20,11 @@ const ConfirmDeleteDialog = ({
   const handleDeleteCustomer = () => {
     deleteCustomer(selectedCustomer?._id)
       .then((res) => removeCustomer(selectedCustomer))
-      .catch((err) => console.log(err))
+      .catch((err) =>
+        toast.error(
+          err?.response?.data?.message || "Something went wrong. Try again"
+        )
+      )
       .finally(() => {
         onClose();
       });

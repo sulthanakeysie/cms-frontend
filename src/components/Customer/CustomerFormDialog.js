@@ -12,6 +12,7 @@ import { Formik, Form } from "formik";
 import React, { useState, useEffect } from "react";
 
 import { addCustomer, editCustomer } from "../../services/customer.service";
+import { toast } from "react-toastify";
 
 const CustomerFormDialog = ({
   open,
@@ -66,10 +67,13 @@ const CustomerFormDialog = ({
     if (!selectedCustomer)
       addCustomer(values)
         .then((res) => {
-          addNewCustomer(res.data);
+          toast.success(res?.data?.message);
+          addNewCustomer(res?.data?.data);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(
+            err?.response?.data?.message || "Something went wrong. Try again"
+          );
         })
         .finally(() => {
           setSubmitting(false);
@@ -79,10 +83,12 @@ const CustomerFormDialog = ({
     else
       editCustomer(values, selectedCustomer._id)
         .then((res) => {
-          updateCustomer(res.data);
+          updateCustomer(res.data?.data);
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(
+            err?.response?.data?.message || "Something went wrong. Try again"
+          );
         })
         .finally(() => {
           setSubmitting(false);
