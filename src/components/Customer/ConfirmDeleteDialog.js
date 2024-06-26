@@ -36,9 +36,9 @@ const ConfirmDeleteDialog = ({
       </DialogTitle>
       <DialogContent>
         <Typography color={"textSecondary"}>
-          Are you sure on deleting {selectedCustomer?.name}?.
-          <br />
-          This may cause permanent loss of customer data
+          Are you sure you want to delete this customer record? <br />
+          This action is irreversible and will result in the permanent loss of
+          all associated customer data.
         </Typography>
       </DialogContent>
       <DialogActions>
