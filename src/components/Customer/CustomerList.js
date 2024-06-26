@@ -24,18 +24,20 @@ const CustomerList = () => {
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(null);
 
   useEffect(() => {
-    try {
-      getAllCustomers()
-        .then((res) => {
-          setCustomers(res.data?.data);
-        })
-        .catch((err) =>
-          toast.error(
-            err?.response?.data?.message || "Something went wrong. Try again"
-          )
-        );
-    } catch (error) {
-      toast.error("Something went wrong. Try again");
+    if (isLoggedIn) {
+      try {
+        getAllCustomers()
+          .then((res) => {
+            setCustomers(res.data?.data);
+          })
+          .catch((err) =>
+            toast.error(
+              err?.response?.data?.message || "Something went wrong. Try again"
+            )
+          );
+      } catch (error) {
+        toast.error("Something went wrong. Try again");
+      }
     }
   }, [isLoggedIn]);
 
